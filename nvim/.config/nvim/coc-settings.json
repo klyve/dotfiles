@@ -1,0 +1,45 @@
+{
+  "eslint.autoFixOnSave": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python",
+    "css",
+    "markdown",
+    "Markdown",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "go",
+    "json",
+    "jsonc"
+  ],
+  "prettier.disableSuccessMessage": true,
+  "languageserver": {
+    "golangci-lint-languageserver": {
+      "command": "golangci-lint-langserver",
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "command": [
+          "golangci-lint",
+          "run",
+          "--enable-all",
+          "--exclude-use-default=false",
+          "--disable=lll",
+          "--disable=gomnd",
+          "--disable=wrapcheck",
+          "--out-format=json"
+        ]
+      }
+    }
+  },
+  "coc.preferences.rootPatterns": [
+    ".graphqlrc.yaml",
+    ".python-root",
+    "go.mod",
+    ".git",
+    ".hg",
+    ".projections.json"
+  ],
+  "suggest.noselect": true,
+  "diagnostic.checkCurrentLine": true
+}
