@@ -1,0 +1,165 @@
+window:
+  opacity: 1
+  dimensions:
+    columns: 140
+    lines: 38
+  padding:
+    x: 5
+    y: 5
+  decorations: none
+scrolling:
+  history: 10000
+  multiplier: 3
+
+  # DroidSansMono\ Nerd\ Font:h11
+font:
+  normal:
+    family: FiraCode Nerd Font Mono
+    style: Regular
+  bold:
+    family: FiraCode Nerd Font Mono
+    style: Bold
+  italic:
+    family: FiraCode Nerd Font Mono
+    style: Italic
+  #bold_italic:
+    #family: monospace
+    #style: Bold Italic
+  size: 26.0
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+
+# Colors (Gruvbox light)
+colors:
+  # Default colors
+  primary:
+    # hard contrast: background = '#f9f5d7'
+    background: '#fbf1c7'
+    # soft contrast: background = '#f2e5bc'
+    foreground: '#3c3836'
+
+  # Normal colors
+  normal:
+    black:   '#fbf1c7'
+    red:     '#cc241d'
+    green:   '#98971a'
+    yellow:  '#d79921'
+    blue:    '#458588'
+    magenta: '#b16286'
+    cyan:    '#689d6a'
+    white:   '#7c6f64'
+
+  # Bright colors
+  bright:
+    black:   '#928374'
+    red:     '#9d0006'
+    green:   '#79740e'
+    yellow:  '#b57614'
+    blue:    '#076678'
+    magenta: '#8f3f71'
+    cyan:    '#427b58'
+    white:   '#3c3836'
+
+
+# Colors (Gruvbox dark)
+# colors:
+  # # Default colors
+  # primary:
+    # # hard contrast: background = '#1d2021'
+    # background: '#282828'
+    # # soft contrast: background = '#32302f'
+    # foreground: '#ebdbb2'
+
+  # # Normal colors
+  # normal:
+    # black:   '#282828'
+    # red:     '#cc241d'
+    # green:   '#98971a'
+    # yellow:  '#d79921'
+    # blue:    '#458588'
+    # magenta: '#b16286'
+    # cyan:    '#689d6a'
+    # white:   '#a89984'
+
+  # # Bright colors
+  # bright:
+    # black:   '#928374'
+    # red:     '#fb4934'
+    # green:   '#b8bb26'
+    # yellow:  '#fabd2f'
+    # blue:    '#83a598'
+    # magenta: '#d3869b'
+    # cyan:    '#8ec07c'
+    # white:   '#ebdbb2'
+
+cursor:
+  style: Block
+  vi_mode_style: None
+  unfocused_hollow: true
+  thickness: 0.15
+
+live_config_reload: true
+key_bindings:
+  - { key: N,              mods: Shift|Control,   action: SpawnNewInstance       }
+
+    # Fixes backslash character not working on Norwegian mac keyboard
+  - { key: Backslash,      mods: Shift|Alt,       chars: "\\"                    }
+  - { key: Backslash,      mods: Alt,             chars: "|"                     }
+
+    # Fixes LBracked and RBracket
+  - { key: 28,             mods: Alt,                   chars: "\x5B"            }
+  - { key: 25,             mods: Alt,                   chars: "\x5D"            }
+  - { key: LBracket,       mods: Shift|Alt,             chars: "{"               }
+  - { key: RBracket,       mods: Shift|Alt,             chars: "}"               }
+    # QUOL 
+  - { key: Comma,     mods: Shift|Control,      command: 
+    {program: "open", args: ["~/.config/alacritty/alacritty.yml"]}     }
+
+  
+  # Vi Mode
+  #- { key: Space,  mods: Shift|Control, mode: Vi, action: ScrollToBottom          }
+  #- { key: Space,  mods: Shift|Control,           action: ToggleViMode            }
+  #- { key: Escape,                      mode: Vi, action: ClearSelection          }
+  #- { key: I,                           mode: Vi, action: ScrollToBottom          }
+  #- { key: I,                           mode: Vi, action: ToggleViMode            }
+  #- { key: Y,      mods: Control,       mode: Vi, action: ScrollLineUp            }
+  #- { key: E,      mods: Control,       mode: Vi, action: ScrollLineDown          }
+  #- { key: G,                           mode: Vi, action: ScrollToTop             }
+  #- { key: G,      mods: Shift,         mode: Vi, action: ScrollToBottom          }
+  #- { key: B,      mods: Control,       mode: Vi, action: ScrollPageUp            }
+  #- { key: F,      mods: Control,       mode: Vi, action: ScrollPageDown          }
+  #- { key: U,      mods: Control,       mode: Vi, action: ScrollHalfPageUp        }
+  #- { key: D,      mods: Control,       mode: Vi, action: ScrollHalfPageDown      }
+  #- { key: Y,                           mode: Vi, action: Copy                    }
+  #- { key: Y,                           mode: Vi, action: ClearSelection          }
+  #- { key: Copy,                        mode: Vi, action: ClearSelection          }
+  #- { key: V,                           mode: Vi, action: ToggleNormalSelection   }
+  #- { key: V,      mods: Shift,         mode: Vi, action: ToggleLineSelection     }
+  #- { key: V,      mods: Control,       mode: Vi, action: ToggleBlockSelection    }
+  #- { key: V,      mods: Alt,           mode: Vi, action: ToggleSemanticSelection }
+  #- { key: Return,                      mode: Vi, action: Open                    }
+  #- { key: K,                           mode: Vi, action: Up                      }
+  #- { key: J,                           mode: Vi, action: Down                    }
+  #- { key: H,                           mode: Vi, action: Left                    }
+  #- { key: L,                           mode: Vi, action: Right                   }
+  #- { key: Up,                          mode: Vi, action: Up                      }
+  #- { key: Down,                        mode: Vi, action: Down                    }
+  #- { key: Left,                        mode: Vi, action: Left                    }
+  #- { key: Right,                       mode: Vi, action: Right                   }
+  #- { key: Key0,                        mode: Vi, action: First                   }
+  #- { key: Key4,   mods: Shift,         mode: Vi, action: Last                    }
+  #- { key: Key6,   mods: Shift,         mode: Vi, action: FirstOccupied           }
+  #- { key: H,      mods: Shift,         mode: Vi, action: High                    }
+  #- { key: M,      mods: Shift,         mode: Vi, action: Middle                  }
+  #- { key: L,      mods: Shift,         mode: Vi, action: Low                     }
+  #- { key: B,                           mode: Vi, action: SemanticLeft            }
+  #- { key: W,                           mode: Vi, action: SemanticRight           }
+  #- { key: E,                           mode: Vi, action: SemanticRightEnd        }
+  #- { key: B,      mods: Shift,         mode: Vi, action: WordLeft                }
+  #- { key: W,      mods: Shift,         mode: Vi, action: WordRight               }
+  #- { key: E,      mods: Shift,         mode: Vi, action: WordRightEnd            }
+  #- { key: Key5,   mods: Shift,         mode: Vi, action: Bracket                 }
