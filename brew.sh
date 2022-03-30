@@ -12,8 +12,6 @@ else
     brew update
 fi
 
-
-
 # Applications
 brew install --cask slack
 brew install --cask spotify
@@ -23,8 +21,6 @@ brew install --cask alfred
 brew install --cask alacritty
 brew install --cask amethyst
 brew install --cask altair-graphql-client
-
-
 
 # Browsers
 brew install --cask google-chrome
@@ -36,7 +32,6 @@ brew install --cask figma
 # Development
 
 brew cask install docker
-
 brew install stow
 brew install kubectl
 brew install kubectx
@@ -55,11 +50,6 @@ npm install -g expo-cli
 # https://yarnpkg.com/getting-started/install
 npm i -g corepack
 corepack enable
-
-
-brew install neovim
-
-
 
 # Terminal additions
 brew install gpg
@@ -84,10 +74,20 @@ brew tap homebrew/cask-fonts
 brew install --cask font-fira-code
 brew install --cask font-fira-mono
 
-
+# Nvim
+brew install neovim
 pip3 install pynvim --upgrade
 yarn global add neovim
 
 # set up gnupg
 echo "pinentry-program $(which pinentry-mac)" >> ~/.gnupg/gpg-agent.conf
 killall gpg-agent
+
+
+# Setup and install RVM + cocapods 
+gpg --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+\curl -sSL https://get.rvm.io | bash -s stable
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
+rvm install 3.1.1
+
+gem install cocoapods
