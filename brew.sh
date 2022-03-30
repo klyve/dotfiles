@@ -31,7 +31,7 @@ brew install --cask figma
 
 # Development
 
-brew cask install docker
+brew install --cask docker
 brew install stow
 brew install kubectl
 brew install kubectx
@@ -66,7 +66,7 @@ brew install tmux
 brew install tmuxinator
 brew install zsh-autosuggestions
 brew install romkatv/powerlevel10k/powerlevel10k
-brew installe exa
+brew install exa
 brew install pinentry-mac
 
 
@@ -84,10 +84,14 @@ echo "pinentry-program $(which pinentry-mac)" >> ~/.gnupg/gpg-agent.conf
 killall gpg-agent
 
 
-# Setup and install RVM + cocapods 
-gpg --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-\curl -sSL https://get.rvm.io | bash -s stable
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
-rvm install 3.1.1
+if ! type rvm > /dev/null; then
+  gpg --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+  \curl -sSL https://get.rvm.io | bash -s stable
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
+fi
 
-gem install cocoapods
+# If ruby version is not 3.1.1
+if ! rvm list | grep -q 3.1.1; then
+  rvm install 3.1.1
+fi
+
