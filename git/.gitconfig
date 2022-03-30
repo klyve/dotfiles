@@ -1,6 +1,5 @@
 [init]
   defaultBranch = main
-  signingKey = 663637CD1053DBDA
 
 [user]
 	email = bjarteklarsen@gmail.com
