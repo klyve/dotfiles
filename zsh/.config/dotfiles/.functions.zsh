@@ -111,16 +111,6 @@ function proxy-kafka {
     kubectl port-forward svc/kafka -n infrastructure 9092
 }
 
-function serveo {
-    if [[ $# -lt 2 ]]; then
-        echo "Useage serveo <name> <port>"
-    else
-        ssh -o ServerAliveInterval=60 -R $1:80:localhost:$2 serveo.net
-    fi
-}
-
-
-
 function bltc {
     [ `uname -s` != "Darwin" ] && echo "Cannot run on non-macosx system." && return
     osascript -i <<EOF
@@ -141,34 +131,6 @@ end tell
 EOF
 }
 
-function tab {
-    [ `uname -s` != "Darwin" ] && echo "Cannot run on non-macosx system." && return
-    local cmd=""
-    local cdto="$PWD"
-    local args="$@"
-
-    if [ -d "$1" ]; then
-        cdto=`cd "$1"; pwd`
-        args="${@:2}"
-    fi
-
-    if [ -n "$args" ]; then
-        cmd="$args"
-    fi
-
-    osascript -i <<EOF
-tell application "iTerm"
-    tell current window
-        create tab with default profile
-        tell the current session
-            write text "cd \"$cdto\"; $cmd"
-            write text "clear; $cmd"
-        end tell
-    end tell
-end tell
-EOF
-}
-
 function coffee {
     touch ~/.coffee
     if [[ $# -lt 1 ]]; then
@@ -181,23 +143,12 @@ function coffee {
     fi
 }
 
-function squarespace {
-    squarespace-server https://${SQUARESPACE_WEBSITE}.squarespace.com --auth --verbose
-}
-
 function cd {
     builtin cd "$@" && exa -abghHliS
 }
+
 function ls {
   exa "$@" -abghHlS
-}
-
-function create-service {
-    hub create MaritimeOptima/$1 -p
-}
-
-function git-clone {
-    git clone git@github.com:MaritimeOptima/$1.git
 }
 
 function create-note {
@@ -244,20 +195,6 @@ function kafka-listen-topic {
     --topic $1 --from-beginning
 }
 
-function ecr-repo {
-    if [ -z $1 ]; then
-        echo "Requires repository name"
-        return
-    fi
-    name="${ECR_NAMESPACE}${1}"
-    repo=$(aws ecr describe-repositories|grep "repository/${name}\",")
-    if [ -z "$repo" ]; then
-        aws ecr create-repository --repository-name $name
-    else
-        echo "Repo already exists"
-    fi
-}
-
 function video-gif {
 ulimit -Sv 1000000
 filename=$(basename -- "$1")
@@ -266,73 +203,6 @@ ffmpeg \
   -r 10 \
   $filename.gif
 }
-
-
-function vault-login {
-    token=$(curl --request POST --data '{"token": "'${GITHUB_TOKEN}'"}' ${VAULT_ADDR}/v1/auth/github/login| jq -r '.auth.client_token')
-    export VAULT_TOKEN=$token
-}
-
-function render-consul-template {
-    vault-login
-    echo "Starting consul template"
-    consul-template -once -config $1 $2
-}
-
-
-function vault-db {
-    if [ -z $VAULT_TOKEN ]; then
-        echo "No vault token set"
-        return
-    fi
-    eval "$(curl --header "X-Vault-Token: $VAULT_TOKEN" -s -k  ${VAULT_ADDR}/v1/database/creds/$1| jq -r '.data | to_entries | .[] | .key + "=\"" + .value + "\""')"
-   
-    export VAULT_DB_USERNAME=$username
-    export VAULT_DB_PASSWORD=$password
-    echo "*************************************"
-    echo "Set Vault DB environment variables"
-    echo
-    echo "VAULT_DB_USERNAME"
-    echo "VAULT_DB_PASSWORD"
-    echo
-    echo "*************************************"
-}
-
-function vault-aws {
-    if [ -z $VAULT_TOKEN ]; then
-        echo "No vault token set"
-        return
-    fi
-    eval "$(curl --header "X-Vault-Token: $VAULT_TOKEN" -s -k  ${VAULT_ADDR}/v1/aws/creds/$1| jq -r '.data | to_entries | .[] | .key + "=\"" + .value + "\""')"
-   
-    export VAULT_AWS_SECRET_KEY=$secret_key
-    export VAULT_AWS_ACCESS_KEY=$access_key
-    echo "*************************************"
-    echo "Set Vault AWS environment variables"
-    echo
-    echo "VAULT_AWS_SECRET_KEY"
-    echo "VAULT_AWS_ACCESS_KEY"
-    echo
-    echo "*************************************"
-}
-
-function set-aws-environment-vars {
-    mkdir -p ~/.maritimeoptima
-    echo "$(aws ssm get-parameters --name $AWS_ENVIRONMENT --with-decryption --query "Parameters[*].{Name:Name,Value:Value}" |jq '.[0].Value' --raw-output)" > ~/.maritimeoptima/environment.sh
-    source ~/.maritimeoptima/environment.sh
-    # rm ~/.maritimeoptima/environment.sh
-}
-
-function az-secrets {
-  eval $(keyvault-env -environment $1)
-  kubectx mo-$1-aks
-}
-
-function git-video {
-    gource -c 4.0 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4
-}
-
-
   
 # Updates editor information when the keymap changes.
 function zle-keymap-select() {
