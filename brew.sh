@@ -95,3 +95,16 @@ if ! rvm list | grep -q 3.1.1; then
   rvm install 3.1.1
 fi
 
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  ios=iOS15.4
+  phones=(
+    "iPhone 12 Pro Max"
+    "iPhone 12 Pro"
+  )
+
+  gem install cocoapods
+  for phone in "${phones[@]}"; do
+    xcrun simctl create "$phone" "$phone" $ios
+  done
+fi
