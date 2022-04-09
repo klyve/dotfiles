@@ -1,0 +1,3 @@
+[submodule "rakentaa"]
+	path = rakentaa
+	url = git@github.com:klyve/dotfiles-rakentaa.git
