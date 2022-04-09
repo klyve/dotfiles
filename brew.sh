@@ -35,6 +35,7 @@ brew install --cask docker
 brew install stow
 brew install kubectl
 brew install kubectx
+brew install kind
 brew install jq
 brew install protobuf
 brew install argoproj/tap/argo
