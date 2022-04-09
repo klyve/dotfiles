@@ -1,3 +1,11 @@
 [submodule "rakentaa"]
 	path = rakentaa
-	url = git@github.com:klyve/dotfiles-rakentaa.git
+  url = git@github.com:klyve/dotfiles-rakentaa.git
+
+[submodule "maritimeoptima"]
+	path = maritimeoptima
+  url = git@github.com:klyve/dotfiles-maritimeoptima.git
+
+[submodule "dotfiles-maritimeoptima"]
+	path = dotfiles-maritimeoptima
+	url = git@github.com:klyve/dotfiles-maritimeoptima.git
