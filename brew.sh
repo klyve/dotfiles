@@ -17,6 +17,7 @@ brew install --cask slack
 brew install --cask spotify
 brew install --cask discord
 brew install --cask 1password
+brew install --cask 1password-cli
 brew install --cask alfred
 brew install --cask alacritty
 brew install --cask amethyst
