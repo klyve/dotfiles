@@ -26,8 +26,10 @@ do
   echo "----------------------------"
   echo "Stowing submodule $submodule"
   if [ -f "$submodule/stow.sh" ]; then
+    cd $submodule 
     echo "Running stow.sh in $submodule"
-    $submodule/stow.sh
+    ./stow.sh
+    cd -
   else
     echo -e "\tNo stow.sh found in $submodule"
   fi
