@@ -44,6 +44,8 @@ brew install argoproj/tap/argo
 brew install azure-cli
 brew install cmake
 
+brew install postgis
+brew install psql
 brew install go
 brew install node
 npm install -g n
