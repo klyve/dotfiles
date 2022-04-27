@@ -417,7 +417,7 @@ vmap <leader>r :normal @
 " set runtimepath+=,/some/absolute/path/to/sql_runner.vim
 " set runtimepath+=/Users/bjarte/.go/src/github.com/klyve/cheatsh.vim
 
-let g:copilot_filetypes = { "markdown": 1 }
+let g:copilot_filetypes = { "markdown": 1, "yaml": 1 }
 
 
 " VimWiki
