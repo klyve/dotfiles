@@ -1,3 +1,46 @@
+function list-projects {
+  project_roots=(
+    "$HOME/personal"
+    "$HOME/work"
+  )
+  depth=3
+
+  # Loop over project roots and find ll directories that contain a .git folder
+  for project_root in "${project_roots[@]}"; do
+    for dir in $(find $project_root -maxdepth $depth -type d); do
+      # We want to track all folders that contain .git folders or .workspace files
+      if [[ -d $dir/.git || -f $dir/.workspace ]]; then
+        echo "$dir" | sed "s|$HOME|~|"
+      fi
+    done
+  done
+}
+
+function find-project() {
+  PROJECT_PATH=$(list-projects |fzf)
+
+  if [[ $PROJECT_PATH == "" ]]; then
+    return
+  fi
+
+  # TODO: in some cases the directories are called the same.
+  NAME=$(echo $PROJECT_PATH| awk -F/ '{print $NF}')
+
+  # Check if there is a session with the same name, if there is attach to that
+  tmux has-session -t=$NAME > /dev/null 2>&1
+  if [ $? -eq 1 ]; then
+    tmux new-session -s $NAME -n $NAME -d -c $PROJECT_PATH
+    tmux send-keys -t $NAME "cd $PROJECT_PATH && clear" C-m
+  fi
+
+  if [[ -n "$TMUX" ]]; then
+    tmux switch -t $NAME
+  else
+    echo "tmux attach-session -t $NAME -c $PROJECT_PATH"
+    tmux attach-session -t $NAME -c $PROJECT_PATH 
+  fi
+}
+
 function reload { 
     source ~/.zshrc
 }
@@ -28,6 +71,11 @@ function kproxy {
 
 function kforward {
     kproxy --expose $1
+}
+
+function az-secrets {
+  eval $(keyvault-env -environment $1)
+  kubectx mo-$1-aks
 }
 
 function dev {
@@ -220,49 +268,7 @@ function vi-accept-line() {
   zle accept-line
 }
 
-function list-projects {
-  project_roots=(
-    "$HOME/personal"
-    "$HOME/work"
-  )
-  depth=3
-
-  # Loop over project roots and find ll directories that contain a .git folder
-  for project_root in "${project_roots[@]}"; do
-    for dir in $(find $project_root -maxdepth $depth -type d); do
-      # We want to track all folders that contain .git folders or .workspace files
-      if [[ -d $dir/.git || -f $dir/.workspace ]]; then
-        echo "$dir" | sed "s|$HOME|~|"
-      fi
-    done
-  done
-}
-
-# TODO: Figure out how to launch this from inside of tmux also
-function find-project() {
-  PROJECT_PATH=$(list-projects |fzf)
-
-  if [[ $PROJECT_PATH == "" ]]; then
-    return
-  fi
-
-  NAME=$(echo $PROJECT_PATH| awk -F/ '{print $NF}')
-
-  # Check if there is a session with the same name, if there is attach to that
-  tmux has-session -t=$NAME > /dev/null 2>&1
-  if [ $? -eq 1 ]; then
-    tmux new-session -s $NAME -n $NAME -d -c $PROJECT_PATH
-    tmux send-keys -t $NAME "cd $PROJECT_PATH && clear" C-m
-  fi
-
-  if [[ -n "$TMUX" ]]; then
-    tmux switch -t $NAME
-  else
-    tmux attach-session -t $NAME -c $PROJECT_PATH
-  fi
-}
-
-zle -N find-project
+# zle -N find-project
 zle -N vi-accept-line
 
 
@@ -281,7 +287,8 @@ bindkey -M vicmd 'v' edit-command-line
 bindkey '^P' up-history
 bindkey '^N' down-history
 
-bindkey '^F' find-project
+# run find-project when pressing ctrl+F
+bindkey -s '^F' 'find-project\n'
 
 # allow ctrl-h, ctrl-w, ctrl-? for char and word deletion (standard behaviour)
 bindkey '^?' backward-delete-char
