@@ -1,13 +1,13 @@
+export PROJECT_SEARCH_DEPTH=3
 function list-projects {
   project_roots=(
     "$HOME/personal"
     "$HOME/work"
   )
-  depth=3
 
   # Loop over project roots and find ll directories that contain a .git folder
   for project_root in "${project_roots[@]}"; do
-    for dir in $(find $project_root -maxdepth $depth -type d); do
+    for dir in $(find $project_root -maxdepth $PROJECT_SEARCH_DEPTH -type d); do
       # We want to track all folders that contain .git folders or .workspace files
       if [[ -d $dir/.git || -f $dir/.workspace ]]; then
         echo "$dir" | sed "s|$HOME|~|"
