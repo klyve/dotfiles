@@ -20,6 +20,7 @@ export FZF_DEFAULT_COMMAND='ag --follow --nocolor --ignore node_modules -g ""'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Source dotfiles
 for file in $(find ~/.config/dotfiles); do
   [ -f "$file" ] && source "$file"
 done

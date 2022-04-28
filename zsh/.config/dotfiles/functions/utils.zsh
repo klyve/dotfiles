@@ -23,20 +23,21 @@ function find-project() {
     return
   fi
 
-  # TODO: in some cases the directories are called the same.
-  NAME=$(echo $PROJECT_PATH| awk -F/ '{print $NF}')
+  # The name is the last two directories in the path
+  # This is to avoid duplicates
+  NAME=$(echo $PROJECT_PATH | awk -F/ '{print $(NF-1)"/"$NF}')
+  PANE_NAME=$(echo $PROJECT_PATH| awk -F/ '{print $NF}')
 
   # Check if there is a session with the same name, if there is attach to that
   tmux has-session -t=$NAME > /dev/null 2>&1
   if [ $? -eq 1 ]; then
-    tmux new-session -s $NAME -n $NAME -d -c $PROJECT_PATH
+    tmux new-session -s $NAME -n $PANE_NAME -d -c $PROJECT_PATH
     tmux send-keys -t $NAME "cd $PROJECT_PATH && clear" C-m
   fi
 
   if [[ -n "$TMUX" ]]; then
     tmux switch -t $NAME
   else
-    echo "tmux attach-session -t $NAME -c $PROJECT_PATH"
     tmux attach-session -t $NAME -c $PROJECT_PATH 
   fi
 }
