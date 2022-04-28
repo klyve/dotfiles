@@ -249,8 +249,8 @@ nmap <C-x> <C-w>x
 " let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 "
 
-nnoremap <leader>f <cmd>Telescope find_files<cr>
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>f <cmd>Telescope find_files hidden=true<cr>
+nnoremap <leader>ff <cmd>Telescope find_files hidden=true<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
