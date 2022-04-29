@@ -22,6 +22,7 @@ brew install --cask alfred
 brew install --cask alacritty
 brew install --cask amethyst
 brew install --cask altair-graphql-client
+brew install htop
 
 # Browsers
 brew install --cask google-chrome
