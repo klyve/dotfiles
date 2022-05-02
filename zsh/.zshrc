@@ -13,7 +13,9 @@ compinit
 
 [[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
 
-source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+# source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
+
 
 
 export FZF_DEFAULT_COMMAND='ag --follow --nocolor --ignore node_modules -g ""'
