@@ -447,7 +447,6 @@ require'nvim-treesitter.configs'.setup {
     "javascript",
     "json",
     "make",
-    "proto",
     "python",
     "ruby",
     "typescript",
