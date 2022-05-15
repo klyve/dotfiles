@@ -3,6 +3,7 @@ function list-projects {
   project_roots=(
     "$HOME/personal"
     "$HOME/work"
+    "$HOME/dotfiles"
   )
 
   # Loop over project roots and find ll directories that contain a .git folder
