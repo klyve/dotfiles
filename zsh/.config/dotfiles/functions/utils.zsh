@@ -66,3 +66,8 @@ function prune-node {
     find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
 }
 
+function note {
+  FILENAME=${1-unknown_note}-$(date +%Y-%m-%d)
+  touch $FILENAME.md
+}
+
