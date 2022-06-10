@@ -57,6 +57,9 @@ npm install -g expo-cli
 npm i -g corepack
 corepack enable
 
+# Lsp for typescript and javascript
+npm install -g typescript typescript-language-server eslint prettier
+
 # Terminal additions
 brew install gpg
 brew install neofetch
