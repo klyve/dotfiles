@@ -40,18 +40,38 @@ local source_mapping = {
 	buffer = "[Buffer]",
 	nvim_lsp = "[LSP]",
 	nvim_lua = "[Lua]",
+  luasnip = "[LuaSnip]",
 	path = "[Path]",
+  constant = "[C]",
 }
 local lspkind = require("lspkind")
 
 cmp.setup({
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
 	mapping = cmp.mapping.preset.insert({
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
 		["<C-u>"] = cmp.mapping.scroll_docs(-4),
 		["<C-d>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-j>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, { "i", "s" }),
+    ["<C-k>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      end
+    end, { "i", "s" }),
 	}),
-
   formatting = {
     format = function(entry, vim_item)
       vim_item.kind = lspkind.presets.default[vim_item.kind]
@@ -63,6 +83,7 @@ cmp.setup({
 
 	sources = {
 		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
 		{ name = "buffer" },
 	},
 })
@@ -100,3 +121,6 @@ null_ls.setup({
     },
     on_attach = on_attach
 })
+
+-- Include the snippets from friendly-snippets.
+require("luasnip.loaders.from_vscode").lazy_load()

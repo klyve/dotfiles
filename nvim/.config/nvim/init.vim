@@ -14,6 +14,8 @@ call plug#begin()
   Plug 'onsails/lspkind-nvim'
   Plug 'jose-elias-alvarez/null-ls.nvim'
   Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+  Plug 'L3MON4D3/LuaSnip'
+  Plug 'rafamadriz/friendly-snippets'
 
 
 " QOL plugins
