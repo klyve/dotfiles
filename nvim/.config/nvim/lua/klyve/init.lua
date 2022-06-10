@@ -22,5 +22,3 @@ P = function(v)
 	return v
 end
 
-P("Hello")
-

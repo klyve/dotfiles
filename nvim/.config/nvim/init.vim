@@ -12,12 +12,15 @@ call plug#begin()
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/nvim-cmp'
   Plug 'onsails/lspkind-nvim'
+  Plug 'jose-elias-alvarez/null-ls.nvim'
+  Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
 
 " QOL plugins
   Plug 'easymotion/vim-easymotion'
   Plug 'junegunn/vim-easy-align'
   Plug 'tpope/vim-surround'
+  " Plug 'junegunn/rainbow_parentheses.vim'
 
   " Development
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
