@@ -2,9 +2,16 @@
 call plug#begin()
   Plug 'scrooloose/nerdtree'
   Plug 'scrooloose/nerdcommenter'
-  " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
+
+
+  """ LSP Configs
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'onsails/lspkind-nvim'
 
 
 " QOL plugins
@@ -12,13 +19,8 @@ call plug#begin()
   Plug 'junegunn/vim-easy-align'
   Plug 'tpope/vim-surround'
 
-" Focus mode 
-  " Plug 'junegunn/goyo.vim'
-  " Plug 'junegunn/limelight.vim'
-
   " Development
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'editorconfig/editorconfig-vim' " Use editorconfig if it is available
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
   " Plug 'W0rp/ale'
@@ -130,6 +132,7 @@ autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 autocmd FileType json syntax match Comment +\/\/.\+$+
 autocmd BufNewFile,BufRead .eslintrc set filetype=javascript
 
+lua require("klyve")
 lua << EOF
 require('telescope').setup{
   defaults = { 
@@ -261,90 +264,9 @@ nmap <leader>gc :Gcommit<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gj :diffget //3<CR>
 
-" coc config
-let g:coc_global_extensions = [
-  \ 'coc-snippets',
-  \ 'coc-pairs',
-  \ 'coc-tsserver',
-  \ 'coc-eslint',
-  \ 'coc-json',
-  \ 'coc-emmet'
-  \ ]
-
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gf <Plug>(coc-references)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-rename)
-imap <C-l> <Plug>(coc-snippets-expand)
-imap <C-j> <Plug>(coc-snippets-select)
-let g:coc_snippet_next = '<c-j>'
 
 
 nmap <leader>gl :Git log<cr>
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>F  <Plug>(coc-format-selected)
-nmap <leader>F  <Plug>(coc-format-selected)
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-
-" Coc navigation with tab
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-nmap <C-s> :CocList snippets <CR>
-
-" coc#_select_confirm() " will select the first item I'd rather tab + <CR>
-" \<C-n>
-" Left here incase I change my mind down the road
-inoremap <expr> <Tab>
-      \ pumvisible() ? "\<C-n>":
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-
-
-let g:coc_snippet_next = '<Tab>'
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-
 
 " Reload VIMRC in all windows on save
 if !exists("*ReloadVimrc")
@@ -405,11 +327,6 @@ endfunction
 
 nnoremap <C-x><C-t> :call Toggle_transparent_background()<CR>
 
-" fun! RunMacroOverSelection(macroname)
-    " execute "'<,'>normal @". a:macroname
-" endfun
-" com -nargs=1 Rover :call RunMacroOverSelection(<f-args>)
-" nnoremap <leader>r :Rover<space>
 vmap <leader>r :normal @
 
 " cheat.sh mapping
