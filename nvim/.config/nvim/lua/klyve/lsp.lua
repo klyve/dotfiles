@@ -2,6 +2,7 @@ local on_attach = function(client, bufnr)
   -- create lsp commands
   vim.cmd("command! LspDef lua vim.lsp.buf.definition()")
   vim.cmd("command! LspFormatting lua vim.lsp.buf.formatting()")
+  vim.cmd("command! LspFormattingSync lua vim.lsp.buf.formatting_sync()")
   vim.cmd("command! LspCodeAction lua vim.lsp.buf.code_action()")
   vim.cmd("command! LspHover lua vim.lsp.buf.hover()")
   vim.cmd("command! LspRename lua vim.lsp.buf.rename()")
@@ -18,8 +19,8 @@ local on_attach = function(client, bufnr)
   Nnoremap("<leader>rr", ":LspRefs<CR>")
   Nnoremap("<leader>gr", ":LspRename<CR>")
 
-  if client.server_capabilities.documentFormattingProvider then
-      vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.format()")
+  if client.resolved_capabilities.document_formatting then
+      vim.cmd("autocmd BufWritePre <buffer> LspFormattingSync")
   end
 end
 
@@ -90,8 +91,11 @@ cmp.setup({
 
 require("lspconfig").tsserver.setup(config({
   on_attach = function(client, bufnr)
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+    -- This is for neovim 0.8 and above.
+    -- client.server_capabilities.documentFormattingProvider = false
+    -- client.server_capabilities.documentRangeFormattingProvider = false
     local ts_utils = require("nvim-lsp-ts-utils")
     ts_utils.setup({})
     ts_utils.setup_client(client)
