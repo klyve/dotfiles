@@ -1,9 +1,12 @@
 """ Vim-Plug
 call plug#begin()
-  Plug 'scrooloose/nerdtree'
+  " Plug 'scrooloose/nerdtree'
   Plug 'scrooloose/nerdcommenter'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
+
+  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'kyazdani42/nvim-tree.lua'
 
 
   """ LSP Configs
@@ -29,8 +32,8 @@ call plug#begin()
   Plug 'editorconfig/editorconfig-vim' " Use editorconfig if it is available
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
   " Plug 'W0rp/ale'
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  " Plug 'ryanoasis/vim-devicons'
+  " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'mbbill/undotree'
   Plug 'tpope/vim-fugitive'
   Plug 'keith/swift.vim'
@@ -207,29 +210,31 @@ nmap <Leader>L <Plug>(easymotion-overwin-line)
 map  <Leader>W <Plug>(easymotion-bd-w)
 nmap <Leader>W <Plug>(easymotion-overwin-w)
 
+nmap <leader>q :NvimTreeToggle<CR>
+
 " Nerd tree
-let NERDTreeShowHidden=1
-let g:NERDTreeIgnore = ['^node_modules$']
-nmap <leader>q :NERDTreeToggle<CR>
-nmap \ <leader>q
+" let NERDTreeShowHidden=1
+" let g:NERDTreeIgnore = ['^node_modules$']
+" nmap <leader>q :NERDTreeToggle<CR>
+" nmap \ <leader>q
 
-" Nerd commenter
-let g:NERDSpaceDelims = 1
-let g:NERDTrimTrailingWhitespace = 1
+" " Nerd commenter
+" let g:NERDSpaceDelims = 1
+" let g:NERDTrimTrailingWhitespace = 1
 
-" Check if NERDTree is open or active
-function! IsNERDTreeOpen()        
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
+" " Check if NERDTree is open or active
+" function! IsNERDTreeOpen()
+  " return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+" endfunction
 
-" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
-" file, and we're not in vimdiff
-function! SyncTree()
-  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-    NERDTreeFind
-    wincmd p
-  endif
-endfunction
+" " Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" " file, and we're not in vimdiff
+" function! SyncTree()
+  " if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+    " NERDTreeFind
+    " wincmd p
+  " endif
+" endfunction
 
 " Highlight currently open buffer in NERDTree
 " autocmd BufEnter * call SyncTree()
