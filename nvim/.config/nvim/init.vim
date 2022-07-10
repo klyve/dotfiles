@@ -7,6 +7,7 @@ call plug#begin()
 
   Plug 'kyazdani42/nvim-web-devicons'
   Plug 'kyazdani42/nvim-tree.lua'
+  Plug 'TimUntersberger/neogit'
 
 
   """ LSP Configs
@@ -35,7 +36,7 @@ call plug#begin()
   " Plug 'ryanoasis/vim-devicons'
   " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'mbbill/undotree'
-  Plug 'tpope/vim-fugitive'
+  "Plug 'tpope/vim-fugitive'
   Plug 'keith/swift.vim'
   Plug 'towolf/vim-helm'
 
@@ -200,7 +201,7 @@ map  <Leader>t <Plug>(easymotion-bd-f)
 nmap <Leader>t <Plug>(easymotion-overwin-f)
 
 " s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
+"nmap s <Plug>(easymotion-overwin-f2)
 
 " Move to line
 map <Leader>L <Plug>(easymotion-bd-jk)
@@ -268,11 +269,13 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+" Neogit 
+nmap <leader>gs :Neogit<CR>
+
 " fugitive
-nmap <leader>gs :G<CR>
-nmap <leader>gc :Gcommit<CR>
-nmap <leader>gf :diffget //2<CR>
-nmap <leader>gj :diffget //3<CR>
+"nmap <leader>gc :Gcommit<CR>
+"nmap <leader>gf :diffget //2<CR>
+"nmap <leader>gj :diffget //3<CR>
 
 
 
