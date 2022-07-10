@@ -62,6 +62,7 @@ export ECR_NAMESPACE="maritime-optima/microservices/"
 
 export ANDROID_SDK=$HOME/Library/Android/sdk
 export ANDROID_HOME=$ANDROID_SDK
+export JAVA_HOME=$(brew --prefix java)
 export PATH="$PATH:$ANDROID_SDK/emulator"
 export PATH="$PATH:$ANDROID_SDK/tools"
 export PATH="$PATH:$ANDROID_SDK/platform-tools"
