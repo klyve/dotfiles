@@ -1,3 +1,6 @@
+local lspconfig = require 'lspconfig'
+local configs = require 'lspconfig/configs'
+
 local on_attach = function(client, bufnr)
   -- create lsp commands
   vim.cmd("command! LspDef lua vim.lsp.buf.definition()")
@@ -89,7 +92,7 @@ cmp.setup({
 	},
 })
 
-require("lspconfig").tsserver.setup(config({
+lspconfig.tsserver.setup(config({
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = false
     client.resolved_capabilities.document_range_formatting = false
@@ -104,7 +107,7 @@ require("lspconfig").tsserver.setup(config({
   end,
 }))
 
-require("lspconfig").gopls.setup(config({
+lspconfig.gopls.setup(config({
 	cmd = { "gopls", "serve" },
 	settings = {
 		gopls = {
@@ -128,3 +131,21 @@ null_ls.setup({
 
 -- Include the snippets from friendly-snippets.
 require("luasnip.loaders.from_vscode").lazy_load()
+
+
+
+if not configs.golangcilsp then
+ 	configs.golangcilsp = {
+		default_config = {
+			cmd = {'golangci-lint-langserver'},
+			root_dir = lspconfig.util.root_pattern('.git', 'go.mod'),
+			init_options = {
+					command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json" };
+			}
+		};
+	}
+end
+
+lspconfig.golangci_lint_ls.setup {
+	filetypes = {'go','gomod'}
+}
