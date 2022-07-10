@@ -117,3 +117,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     xcrun simctl create "$phone" "$phone" $ios
   done
 fi
+
+# Install golangci lint language server
+go install github.com/nametake/golangci-lint-langserver@latest
